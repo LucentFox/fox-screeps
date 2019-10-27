@@ -1,4 +1,4 @@
-var brain = require('brain');
+var jobLogic = require('logic.jobs');
 
 var roleDrone = {
 
@@ -6,32 +6,32 @@ var roleDrone = {
     run: function(creep) {
 
         creep.say('⭐');
-        brain.recharge(creep);
+        jobLogic.recharge(creep);
 
         //if we're all charged up, let's do some stuff
         if(creep.memory.charged){
             
             //if we low on avaialble energy in the room, then let's stock up a bit to build new units
-            if(creep.room.energyAvailable < 800 && brain.deposit(creep)) {
+            if(creep.room.energyAvailable < 800 && jobLogic.deposit(creep)) {
                 return;
             };
 
             //check to see if anything needs repairing
-            if(brain.repair(creep)){
+            if(jobLogic.repair(creep)){
                 return;
             }
 
             //once we have enough base energy, focus on building
-            if(brain.build(creep)){
+            if(jobLogic.build(creep)){
                 return;
             };
 
             //once we're done building, let's top off our stores
-            if(brain.deposit(creep)){
+            if(jobLogic.deposit(creep)){
                 return;
             };
 
-            brain.upgrade(creep);
+            jobLogic.upgrade(creep);
         }
 	}
 };
