@@ -42,7 +42,8 @@ var roleDrone = {
 
         //if we need charging go for sources based on ones that decay first
         if(!creep.memory.charged){
-            jobLogic.gatherDropped(creep) || jobLogic.gatherTombstone(creep) || jobLogic.gatherRuins(creep) || jobLogic.withdraw(creep) || jobLogic.gatherSource(creep)
+            //jobLogic.gatherDropped(creep) || jobLogic.gatherTombstone(creep) || jobLogic.gatherRuins(creep) || 
+            jobLogic.withdraw(creep) || jobLogic.gatherSource(creep);
         }
 
         //if we're all charged up, let's do some stuff

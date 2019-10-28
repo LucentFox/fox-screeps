@@ -7,7 +7,7 @@ var roleDrone = {
     populate: function(){
         var creepsInRole = _.filter(Game.creeps, (creep) => creep.memory.role === roleName);
         
-        if(creepsInRole.length < 7) {
+        if(creepsInRole.length < 4) {
             var newName = roleName + Game.time;
             var retval = 0;
             

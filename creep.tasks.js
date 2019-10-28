@@ -11,16 +11,10 @@ var creepTasks = {
         }
     },
     withdrawEnergy: function(creep, container){
-        if(container && container.store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
-            if(creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(container, {visualizePathStyle: {stroke: '#00ff00'}});
-            }
-            creep.say('⚡');
-            return true;
+        if(creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+            creep.moveTo(container, {visualizePathStyle: {stroke: '#00ff00'}});
         }
-        else {
-            return false;
-        }
+        creep.say('⚡');
     }
 }
 module.exports = creepTasks;

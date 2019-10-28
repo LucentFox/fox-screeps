@@ -94,7 +94,14 @@ var jobLogic = {
     },
     withdraw: function(creep){
         var store = locatorLogic.findOptimalBigStore(creep);
-        return creepTasks.withdrawEnergy(creep,store);
+
+        if(store && store.store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
+            creepTasks.withdrawEnergy(creep,store);
+            return true;
+        }
+        else {
+            return false;
+        }
     },
     build: function(creep){
         creep.say('🛠');
