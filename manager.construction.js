@@ -1,20 +1,21 @@
 var constructionLogic = require('logic.construction');
+var roomLogic = require('logic.room');
 
 var constructionManager = {
     run: function() {
         //automatically construct extensions
         for(var name in Game.spawns){
             var spawn = Game.spawns[name];
-            var roomLevel = spawn.room.controller.level;
-
+            var roomInfo = roomLogic.getRoomInfo(spawn.room);
+           
             //constructionLogic.reset(spawn);
             
-            var extensionMap = constructionLogic.getExtensionMap(spawn.pos, roomLevel);
+            var extensionMap = constructionLogic.getExtensionMap(spawn.pos, roomInfo.roomLevel);
             constructionLogic.buildMap(spawn.room, extensionMap, STRUCTURE_EXTENSION);
 
-            if(spawn.room.energyCapacityAvailable >= 400)
+            if(roomInfo.energyCapacity >= 550)
             {
-                var roadMap = constructionLogic.getRoadMap(spawn.pos, roomLevel);
+                var roadMap = constructionLogic.getRoadMap(spawn.pos, roomInfo.roomLevel);
                 constructionLogic.buildMap(spawn.room, roadMap, STRUCTURE_ROAD);
             }
         }
