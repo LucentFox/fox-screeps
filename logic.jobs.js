@@ -1,5 +1,5 @@
 var locatorLogic = require('logic.locator');
-var levelLogic = require('logic.level');
+var levelLogic = require('logic.room');
 
 var jobLogic = {
     updateStatus: function(creep) {
@@ -73,7 +73,7 @@ var jobLogic = {
     },
 
     pave: function(creep) {
-        var effectiveLevel = levelLogic.getEffectiveLevel(creep.room);
+        var effectiveLevel = levelLogic.getRoomInfo(creep.room);
         var roomLevel = creep.room.controller.level;
         var energyCapacity = creep.room.energyCapacityAvailable;
         if(energyCapacity < 550) {return;}

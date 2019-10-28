@@ -1,4 +1,4 @@
-var levelLogic = require('logic.level');
+var roomLogic = require('logic.room');
 
 var populationManager = {
     run: function() {
@@ -10,7 +10,7 @@ var populationManager = {
             
             for(var name in Game.spawns){
                 var spawn = Game.spawns[name];
-                var effectiveLevel = levelLogic.getEffectiveLevel(spawn.room);
+                var effectiveLevel = roomLogic.getRoomInfo(spawn.room);
 
                 if(spawn.room.energyCapacityAvailable >= 800)
                 {
