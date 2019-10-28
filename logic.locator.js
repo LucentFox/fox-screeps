@@ -31,6 +31,16 @@ var locatorLogic = {
 
         return bigStore;
     },
+    findAvailableBigStore: function(creep){
+        var bigStore = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+            filter: (structure) => {
+                return (structure.structureType == STRUCTURE_CONTAINER &&
+                        structure.store.getUsedCapacity(RESOURCE_ENERGY) > 0);
+            }
+        });
+
+        return bigStore;
+    },
     findOptimalSite: function(creep){
         return creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
     }

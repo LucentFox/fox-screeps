@@ -37,9 +37,13 @@ var roleDrone = {
 
     },
     activate: function(creep) {
-        jobLogic.gatherSource(creep);
-        jobLogic.store(creep);
-        creep.say("🏭");
+        if(creep.store.getFreeCapacity() > 10) {
+            jobLogic.gatherSource(creep);
+        }
+        else {
+            jobLogic.store(creep);
+        }
+        //creep.say("🏭");
         //items that always happen
         // jobLogic.updateStatus(creep);
         // jobLogic.pave(creep);

@@ -93,9 +93,9 @@ var jobLogic = {
         return creepTasks.storeEnergy(creep,store);
     },
     withdraw: function(creep){
-        var store = locatorLogic.findOptimalBigStore(creep);
+        var store = locatorLogic.findAvailableBigStore(creep);
 
-        if(store && store.store.getUsedCapacity(RESOURCE_ENERGY) > 0) {
+        if(store) {
             creepTasks.withdrawEnergy(creep,store);
             return true;
         }
@@ -125,17 +125,18 @@ var jobLogic = {
         if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
             creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ff00ff'}});
         }
+        console.log(creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ff00ff'}}));
     },
 
     repair: function(creep){
         creep.say('🔨');
         var structureToRepair = creep.room.find(FIND_STRUCTURES, {
             filter: function(structure){
+                if(structure.structureType === STRUCTURE_ROAD) {return false;}
                 if(structure.structureType === STRUCTURE_CONTROLLER) {return false;}
                 if(structure.structureType === STRUCTURE_WALL && structure.hits > 20000) {return false;}
-                if(structure.hits > (structure.hitsMax * .9)) {return false;}
-                if(structure.structureType === STRUCTURE_ROAD) {return true;}
-                return false;
+                if(structure.hits > (structure.hitsMax * .1)) {return false;}
+                return true;
             } 
         })[0];
 
