@@ -30,10 +30,25 @@ var jobLogic = {
     },
 
     gatherRuins: function(creep){
+        //TODO: Implement
         return false;
     },
 
     gatherTombstone: function(creep){
+        creep.say('☠');
+        var stones = creep.room.find(FIND_TOMBSTONES, {filter: function(item){
+            if(item.pos.findInRange(FIND_HOSTILE_CREEPS, 5).length > 0) {return false;}
+            if(item.creep.store[RESOURCE_ENERGY] === 0 || item.store[RESOURCE_ENERGY] === 0) {return false;}
+            return true;
+        }});
+
+        if(stones.length){
+            var tombstone = stones[0];
+            if(creep.withdraw(tombstone, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
+                creep.moveTo(tombstone, {visualizePathStyle: {stroke: '#ff0000'}});
+            }
+            return true;
+        }
         return false;
     },
 
@@ -41,8 +56,6 @@ var jobLogic = {
             var sourceLabel = creep.memory.optimalSourceId ? creep.memory.optimalSourceId.substring(creep.memory.optimalSourceId.length - 2) : "?"
             creep.say('⛏ (' + sourceLabel + ')');
 
-            
-            
             //gather resources from a source
             if(creep.memory.optimalSourceId == null || typeof creep.memory.optimalSourceId === 'undefined')
             {
@@ -58,11 +71,14 @@ var jobLogic = {
     },
 
     pave: function(creep) {
+        var roomLevel = creep.room.controller.level;
+        var energyCapacity = creep.room.energyCapacityAvailable;
+        if(roomLevel < 2 || energyCapacity < 400) {return;}
+
         var x = creep.pos.x;
         var y = creep.pos.y;
         var terrainMap = creep.room.getTerrain();
-        var roomLevel = creep.room.controller.level;
-        if((roomLevel >=2 && terrainMap.get(x, y) === TERRAIN_MASK_SWAMP) ||  roomLevel >= 3){
+        if(terrainMap.get(x, y) === TERRAIN_MASK_SWAMP ||  (roomLevel >= 3 && energyCapacity >= 600)){
             creep.room.createConstructionSite(x, y, STRUCTURE_ROAD);
         }
     },
