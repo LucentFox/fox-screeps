@@ -8,7 +8,7 @@ var contructionLogic = {
             //Make sure that position to build in is not a wall
             if(terrainMap.get(x,y) !== TERRAIN_MASK_WALL)
             {
-                room.createConstructionSite(item[0], item[1], structure);
+                room.createConstructionSite(x, y, structure);
             }
         });
     },

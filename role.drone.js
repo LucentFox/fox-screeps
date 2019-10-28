@@ -7,7 +7,8 @@ var roleDrone = {
 
         creep.say('⭐');
         jobLogic.recharge(creep);
-
+        jobLogic.pave(creep);
+        
         //if we're all charged up, let's do some stuff
         if(creep.memory.charged){
             

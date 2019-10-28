@@ -45,6 +45,15 @@ var jobLogic = {
 	    }
     },
 
+    pave: function(creep) {
+        var x = creep.pos.x;
+        var y = creep.pos.y;
+        var terrainMap = creep.room.getTerrain();
+        if(terrainMap.get(x, y) === TERRAIN_MASK_SWAMP){
+            creep.room.createConstructionSite(x, y, STRUCTURE_ROAD);
+        }
+    },
+
     deposit: function(creep) {
         creep.say('💰');
 
