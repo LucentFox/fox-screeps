@@ -49,7 +49,7 @@ var jobLogic = {
         var x = creep.pos.x;
         var y = creep.pos.y;
         var terrainMap = creep.room.getTerrain();
-        if(terrainMap.get(x, y) === TERRAIN_MASK_SWAMP){
+        if(terrainMap.get(x, y) === TERRAIN_MASK_SWAMP ||  creep.room.controller.level >= 3){
             creep.room.createConstructionSite(x, y, STRUCTURE_ROAD);
         }
     },
