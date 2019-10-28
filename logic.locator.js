@@ -6,7 +6,6 @@ var locatorLogic = {
         }});
     
         var optimalSource = safeSources[Math.floor(Math.random() * safeSources.length)];
-    
         return optimalSource ? optimalSource.id : null;
     },
     findOptimalStore: function(creep){

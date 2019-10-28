@@ -60,12 +60,17 @@ var jobLogic = {
             //creep.say('⛏');
 
             //gather resources from a source
+           
+
             if(creep.memory.optimalSourceId == null || typeof creep.memory.optimalSourceId === 'undefined')
             {
                 creep.memory.optimalSourceId = locatorLogic.findOptimalSource(creep);
             }
-            
             var source = Game.getObjectById(creep.memory.optimalSourceId);
+            if(source.energy === 0){
+                creep.memory.optimalSourceId = locatorLogic.findOptimalSource(creep);
+                return;
+            }
             if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
                 if(creep.moveTo(source, {visualizePathStyle: {stroke: '#ffaa00'}}) === ERR_NO_PATH){
                     creep.memory.optimalSourceId = locatorLogic.findOptimalSource(creep);
@@ -82,7 +87,7 @@ var jobLogic = {
         creep.room.createConstructionSite(x, y, STRUCTURE_ROAD);
     },
     store: function(creep) {
-        creep.say('💰💰');
+        //creep.say('💰💰');
         var store = locatorLogic.findOptimalBigStore(creep);
         return creepTasks.storeEnergy(creep,store);
 
@@ -125,7 +130,6 @@ var jobLogic = {
         if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
             creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ff00ff'}});
         }
-        console.log(creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ff00ff'}}));
     },
 
     repair: function(creep){
