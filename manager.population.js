@@ -5,7 +5,7 @@ var populationManager = {
 
         var drones = _.filter(Game.creeps, (creep) => creep.memory.role == 'drone');
     
-        if(drones.length < 8) {
+        if(drones.length < 12) {
             var newName = 'drone' + Game.time;
             var retval = 0;
 

@@ -37,7 +37,7 @@ var jobLogic = {
     gatherTombstone: function(creep){
         creep.say('☠');
         var stones = creep.room.find(FIND_TOMBSTONES, {filter: function(item){
-            if(item.pos.findInRange(FIND_HOSTILE_CREEPS, 5).length > 0) {return false;}
+            if(item.pos.findInRange(FIND_HOSTILE_CREEPS, 10).length > 0) {return false;}
             if(item.creep.store[RESOURCE_ENERGY] === 0 && item.store[RESOURCE_ENERGY] === 0) {return false;}
             return true;
         }});
@@ -53,8 +53,9 @@ var jobLogic = {
     },
 
     gatherSource: function(creep) {
-            var sourceLabel = creep.memory.optimalSourceId ? creep.memory.optimalSourceId.substring(creep.memory.optimalSourceId.length - 2) : "?"
-            creep.say('⛏ (' + sourceLabel + ')');
+            //var sourceLabel = creep.memory.optimalSourceId ? creep.memory.optimalSourceId.substring(creep.memory.optimalSourceId.length - 2) : "?"
+            //creep.say('⛏ (' + sourceLabel + ')');
+            creep.say('⛏');
 
             //gather resources from a source
             if(creep.memory.optimalSourceId == null || typeof creep.memory.optimalSourceId === 'undefined')
