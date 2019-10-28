@@ -12,8 +12,8 @@ var constructionManager = {
             var extensionMap = constructionLogic.getExtensionMap(spawn.pos);
             constructionLogic.buildMap(spawn.room, extensionMap, STRUCTURE_EXTENSION);
 
-            // var roadMap = constructionLogic.getRoadMap(spawn.pos);
-            // constructionLogic.buildMap(spawn.room, roadMap, STRUCTURE_ROAD);
+            var roadMap = constructionLogic.getRoadMap(spawn.pos);
+            constructionLogic.buildMap(spawn.room, roadMap, STRUCTURE_ROAD);
         }
     }
 }
