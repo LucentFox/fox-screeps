@@ -4,7 +4,7 @@ var roleDrone = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
-        //items that happen always
+        //items that always happen
         jobLogic.updateStatus(creep);
         jobLogic.pave(creep);
 
@@ -36,6 +36,7 @@ var roleDrone = {
                 return;
             };
 
+            //lastly, once we're on top of everything focus on upgrading.
             jobLogic.upgrade(creep);
         }
 	}
