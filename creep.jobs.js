@@ -1,11 +1,12 @@
 var locatorLogic = require('logic.locator');
 var levelLogic = require('logic.room');
+var creepTasks = require('creep.tasks');
 
 var jobLogic = {
     updateStatus: function(creep) {
         if(typeof creep.memory.charged === 'undefined' || (creep.memory.charged && creep.store[RESOURCE_ENERGY] == 0)) {
             creep.memory.charged = false;
-            creep.say('🔄');
+            creep.say('⛏');
         }
 
         if(!creep.memory.charged && creep.store.getFreeCapacity() == 0) {
@@ -15,7 +16,6 @@ var jobLogic = {
     },
    
     gatherDropped: function(creep){
-        creep.say('♻');
         //gather dropped resources as a priority
         var dropped_resources = creep.room.find(FIND_DROPPED_RESOURCES, {filter: function(item){ 
             if(item.pos.findInRange(FIND_HOSTILE_CREEPS, 5).length > 0) {return false;}
@@ -25,6 +25,7 @@ var jobLogic = {
             if(creep.pickup(dropped_resources[0]) === ERR_NOT_IN_RANGE){
                 creep.moveTo(dropped_resources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
             }
+            creep.say('♻');
             return true;
         }
         return false;
@@ -36,14 +37,14 @@ var jobLogic = {
     },
 
     gatherTombstone: function(creep){
-        creep.say('☠');
         var stones = creep.room.find(FIND_TOMBSTONES, {filter: function(item){
             if(item.pos.findInRange(FIND_HOSTILE_CREEPS, 10).length > 0) {return false;}
             if(item.creep.store[RESOURCE_ENERGY] === 0 && item.store[RESOURCE_ENERGY] === 0) {return false;}
             return true;
         }});
-
+        
         if(stones.length){
+            creep.say('☠');
             var tombstone = stones[0];
             if(creep.withdraw(tombstone, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
                 creep.moveTo(tombstone, {visualizePathStyle: {stroke: '#ff0000'}});
@@ -56,7 +57,7 @@ var jobLogic = {
     gatherSource: function(creep) {
             //var sourceLabel = creep.memory.optimalSourceId ? creep.memory.optimalSourceId.substring(creep.memory.optimalSourceId.length - 2) : "?"
             //creep.say('⛏ (' + sourceLabel + ')');
-            creep.say('⛏');
+            //creep.say('⛏');
 
             //gather resources from a source
             if(creep.memory.optimalSourceId == null || typeof creep.memory.optimalSourceId === 'undefined')
@@ -78,28 +79,23 @@ var jobLogic = {
 
         var x = creep.pos.x;
         var y = creep.pos.y;
-        //var terrainMap = creep.room.getTerrain();
-        //if(terrainMap.get(x, y) === TERRAIN_MASK_SWAMP ||  (roomLevel >= 3 && energyCapacity >= 600)){
-            creep.room.createConstructionSite(x, y, STRUCTURE_ROAD);
-        //}
+        creep.room.createConstructionSite(x, y, STRUCTURE_ROAD);
     },
+    store: function(creep) {
+        creep.say('💰💰');
+        var store = locatorLogic.findOptimalBigStore(creep);
+        return creepTasks.storeEnergy(creep,store);
 
+    },
     deposit: function(creep) {
         creep.say('💰');
-
         var store = locatorLogic.findOptimalStore(creep);
-
-        if(store) {
-            if(creep.transfer(store, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(store, {visualizePathStyle: {stroke: '#00ff00'}});
-            }
-            return true;
-        }
-        else {
-            return false;
-        }
+        return creepTasks.storeEnergy(creep,store);
     },
-
+    withdraw: function(creep){
+        var store = locatorLogic.findOptimalBigStore(creep);
+        return creepTasks.withdrawEnergy(creep,store);
+    },
     build: function(creep){
         creep.say('🛠');
 

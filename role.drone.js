@@ -1,4 +1,4 @@
-var jobLogic = require('logic.jobs');
+var jobLogic = require('creep.jobs');
 var roomLogic = require('logic.room');
 
 const roleName = "drone";
@@ -42,7 +42,7 @@ var roleDrone = {
 
         //if we need charging go for sources based on ones that decay first
         if(!creep.memory.charged){
-            jobLogic.gatherDropped(creep) || jobLogic.gatherTombstone(creep) || jobLogic.gatherRuins(creep) || jobLogic.gatherSource(creep)
+            jobLogic.gatherDropped(creep) || jobLogic.gatherTombstone(creep) || jobLogic.gatherRuins(creep) || jobLogic.withdraw(creep) || jobLogic.gatherSource(creep)
         }
 
         //if we're all charged up, let's do some stuff
@@ -52,16 +52,16 @@ var roleDrone = {
             if(creep.room.energyAvailable < 800 && jobLogic.deposit(creep)) {
                 return;
             };
-
-            //check to see if anything needs repairing
-            if(jobLogic.repair(creep)){
-                return;
-            }
-
+            
             //once we have enough base energy, focus on building
             if(jobLogic.build(creep)){
                 return;
             };
+            
+            //check to see if anything needs repairing
+            if(jobLogic.repair(creep)){
+                return;
+            }
 
             //once we're done building, let's top off our stores
             if(jobLogic.deposit(creep)){
