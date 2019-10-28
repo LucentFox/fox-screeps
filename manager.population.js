@@ -3,7 +3,7 @@
 var populationManager = {
     run: function() {
 
-        var drones = _.filter(Game.creeps, (creep) => creep.memory.role == 'drone' || creep.memory.role == 'specialist');
+        var drones = _.filter(Game.creeps, (creep) => creep.memory.role == 'drone');
     
         if(drones.length < 8) {
             var newName = 'drone' + Game.time;
@@ -26,10 +26,6 @@ var populationManager = {
                 }
                 else{
                     var retval = spawn.spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'drone'}});
-                }
-
-                if(retval == ERR_NOT_ENOUGH_ENERGY){
-                //console.log('Not enough energy: ' + spawn.room.energyAvailable + '/' + spawn.room.energyCapacityAvailable); 
                 }
             }
         }
