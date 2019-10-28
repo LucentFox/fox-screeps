@@ -1,5 +1,9 @@
 var roomLogic = require('logic.room');
 
+const droneBuilds = [
+
+]
+
 var populationManager = {
     run: function() {
         var drones = _.filter(Game.creeps, (creep) => creep.memory.role == 'drone');

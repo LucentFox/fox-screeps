@@ -7,7 +7,7 @@ var creepManager = {
             if(creep.spawning) { continue; } //don't try to direct creeps that are spawning.
 
             if(creep.memory.role == 'drone') {
-                roleDrone.run(creep);
+                roleDrone.activate(creep);
                 continue;
             }
 

@@ -3,7 +3,7 @@ var jobLogic = require('logic.jobs');
 var roleDrone = {
 
     /** @param {Creep} creep **/
-    run: function(creep) {
+    activate: function(creep) {
         //items that always happen
         jobLogic.updateStatus(creep);
         jobLogic.pave(creep);
