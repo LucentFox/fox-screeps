@@ -1,7 +1,15 @@
 var contructionLogic = {
     buildMap: function(room, constructionMap, structure){
         _.forEach(constructionMap, (item) => {
-            room.createConstructionSite(item[0], item[1], structure);
+            var x = item[0];
+            var y = item[1];
+            var terrainMap = room.getTerrain();
+            
+            //Make sure that position to build in is not a wall
+            if(terrainMap.get(x,y) !== TERRAIN_MASK_WALL)
+            {
+                room.createConstructionSite(item[0], item[1], structure);
+            }
         });
     },
     reset: function(spawn){
