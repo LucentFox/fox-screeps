@@ -4,11 +4,29 @@ var roleDrone = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
-
-        creep.say('⭐');
-        jobLogic.recharge(creep);
+        //items that happen always
+        jobLogic.updateStatus(creep);
         jobLogic.pave(creep);
-        
+
+        //if we need charging go for sources based on ones that decay first
+        if(!creep.memory.charged){
+            if(jobLogic.gatherDropped(creep)){
+                return;
+            };
+
+            if(jobLogic.gatherTombstone(creep)){
+                return;
+            };
+
+            if(jobLogic.gatherRuins(creep)){
+                return;
+            };
+
+            if(jobLogic.gatherSource(creep)){
+                return;
+            };
+        }
+
         //if we're all charged up, let's do some stuff
         if(creep.memory.charged){
             

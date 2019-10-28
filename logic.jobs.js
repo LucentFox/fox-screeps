@@ -1,9 +1,7 @@
 var locatorLogic = require('logic.locator');
 
 var jobLogic = {
-
-    recharge: function(creep) {
-
+    updateStatus: function(creep) {
         if(typeof creep.memory.charged === 'undefined' || (creep.memory.charged && creep.store[RESOURCE_ENERGY] == 0)) {
             creep.memory.charged = false;
             creep.say('🔄');
@@ -13,22 +11,37 @@ var jobLogic = {
             creep.memory.charged = true;
             creep.say('⚡');
         }
+    },
+   
+    gatherDropped: function(creep){
+        creep.say('♻');
+        //gather dropped resources as a priority
+        var dropped_resources = creep.room.find(FIND_DROPPED_RESOURCES, {filter: function(item){ 
+            if(item.pos.findInRange(FIND_HOSTILE_CREEPS, 5).length > 0) {return false;}
+            return true; 
+        }});
+        if(dropped_resources.length){
+            if(creep.pickup(dropped_resources[0]) === ERR_NOT_IN_RANGE){
+                creep.moveTo(dropped_resources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
+            }
+            return true;
+        }
+        return false;
+    },
 
-	    if(!creep.memory.charged) {
+    gatherRuins: function(creep){
+        return false;
+    },
+
+    gatherTombstone: function(creep){
+        return false;
+    },
+
+    gatherSource: function(creep) {
             var sourceLabel = creep.memory.optimalSourceId ? creep.memory.optimalSourceId.substring(creep.memory.optimalSourceId.length - 2) : "?"
             creep.say('⛏ (' + sourceLabel + ')');
 
-            //gather dropped resources as a priority
-            var dropped_resources = creep.room.find(FIND_DROPPED_RESOURCES, {filter: function(item){ 
-                if(item.pos.findInRange(FIND_HOSTILE_CREEPS, 5).length > 0) {return false;}
-                return true; 
-            }});
-            if(dropped_resources.length){
-                if(creep.pickup(dropped_resources[0]) === ERR_NOT_IN_RANGE){
-                    creep.moveTo(dropped_resources[0], {visualizePathStyle: {stroke: '#ffaa00'}});
-                }
-                return;
-            }
+            
             
             //gather resources from a source
             if(creep.memory.optimalSourceId == null || typeof creep.memory.optimalSourceId === 'undefined')
@@ -42,7 +55,6 @@ var jobLogic = {
                     creep.memory.optimalSourceId = locatorLogic.findOptimalSource(creep);
                 };
             }
-	    }
     },
 
     pave: function(creep) {
@@ -78,7 +90,7 @@ var jobLogic = {
 
         if(site){
             if(creep.build(site) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(site, {visualizePathStyle: {stroke: '#ffffff'}});
+                    creep.moveTo(site, {visualizePathStyle: {stroke: '#0000ff'}});
                 }
                 return true;
         }
@@ -91,7 +103,7 @@ var jobLogic = {
     {
         creep.say('🚀');
         if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
+            creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ff00ff'}});
         }
     },
 
@@ -109,7 +121,7 @@ var jobLogic = {
 
         if (structureToRepair){
             if(creep.repair(structureToRepair) == ERR_NOT_IN_RANGE){
-                creep.moveTo(structureToRepair, {visualizePathStyle: {stroke: '#ffffff'}});
+                creep.moveTo(structureToRepair, {visualizePathStyle: {stroke: '#00ffff'}});
             };
             return true;
         } 
