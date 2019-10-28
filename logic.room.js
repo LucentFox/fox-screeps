@@ -3,7 +3,8 @@ var roomLogic = {
         var roomInfo = {
             roomLevel: room.controller.level,
             energyAvailable: room.energyAvailable,
-            energyCapacity: room.energyCapacityAvailable
+            energyCapacity: room.energyCapacityAvailable,
+            constructionSites: room.find(FIND_CONSTRUCTION_SITES).length
         }
         
         

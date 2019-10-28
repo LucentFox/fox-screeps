@@ -73,14 +73,12 @@ var jobLogic = {
     },
 
     pave: function(creep) {
-        var effectiveLevel = levelLogic.getRoomInfo(creep.room);
-        var roomLevel = creep.room.controller.level;
-        var energyCapacity = creep.room.energyCapacityAvailable;
-        if(energyCapacity < 550) {return;}
+        var roomInfo = levelLogic.getRoomInfo(creep.room);
+        if(roomInfo.energyCapacity < 550 || roomInfo.constructionSites >= 5) {return;}
 
         var x = creep.pos.x;
         var y = creep.pos.y;
-        var terrainMap = creep.room.getTerrain();
+        //var terrainMap = creep.room.getTerrain();
         //if(terrainMap.get(x, y) === TERRAIN_MASK_SWAMP ||  (roomLevel >= 3 && energyCapacity >= 600)){
             creep.room.createConstructionSite(x, y, STRUCTURE_ROAD);
         //}

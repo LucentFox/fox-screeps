@@ -7,13 +7,14 @@ var statusManager = {
             var spawn = Game.spawns[name];
             var roomInfo = roomLogic.getRoomInfo(spawn.room);
 
-            var x = 5;
-            var offsetY = 5;
+            var x = spawn.pos.x - 10;
+            var offsetY = spawn.pos.y - 2;
             var statusText = [
                 "💻: " + roomInfo.roomLevel,
                 "⚡: " + roomInfo.energyAvailable,
                 "🔋: " + roomInfo.energyCapacity,
-                "🐜: " + _.filter(Game.creeps, function(item){return true;}).length
+                "🐜: " + _.filter(Game.creeps, function(item){return true;}).length,
+                "🏗: " + roomInfo.constructionSites
             ];
 
             for(var y = 0; y < statusText.length; y++)
