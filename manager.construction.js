@@ -1,32 +1,19 @@
+var constructionLogic = require('logic.construction');
+
 var constructionManager = {
     run: function() {
         //automatically construct extensions
         for(var name in Game.spawns){
             var spawn = Game.spawns[name];
-            var roomLevel = spawn.room.controller.level;
-            var room = spawn.room;
+            //var roomLevel = spawn.room.controller.level;
+            //var room = spawn.room;
 
-            if(roomLevel >= 2)
-            {
-                room.createConstructionSite(spawn.pos.x + 4, spawn.pos.y + 4, STRUCTURE_EXTENSION);
-                room.createConstructionSite(spawn.pos.x + 4, spawn.pos.y - 4, STRUCTURE_EXTENSION);
-                room.createConstructionSite(spawn.pos.x - 4, spawn.pos.y + 4, STRUCTURE_EXTENSION);
-                room.createConstructionSite(spawn.pos.x - 4, spawn.pos.y - 4, STRUCTURE_EXTENSION);
-            }
-            
-            if(roomLevel >=3)
-            {
-                room.createConstructionSite(spawn.pos.x - 3, spawn.pos.y - 4, STRUCTURE_EXTENSION);
-                room.createConstructionSite(spawn.pos.x - 4, spawn.pos.y + 3, STRUCTURE_EXTENSION);
-                room.createConstructionSite(spawn.pos.x + 3, spawn.pos.y + 4, STRUCTURE_EXTENSION);
-                room.createConstructionSite(spawn.pos.x + 4, spawn.pos.y - 3, STRUCTURE_EXTENSION);
+            //constructionLogic.reset(spawn);
+            var extensionMap = constructionLogic.getExtensionMap(spawn.pos);
+            constructionLogic.buildMap(spawn.room, extensionMap, STRUCTURE_EXTENSION);
 
-                room.createConstructionSite(spawn.pos.x - 4, spawn.pos.y - 3, STRUCTURE_EXTENSION);
-                room.createConstructionSite(spawn.pos.x - 3, spawn.pos.y + 4, STRUCTURE_EXTENSION);
-                room.createConstructionSite(spawn.pos.x + 4, spawn.pos.y + 3, STRUCTURE_EXTENSION);
-                room.createConstructionSite(spawn.pos.x + 3, spawn.pos.y - 4, STRUCTURE_EXTENSION);
-
-            }
+            // var roadMap = constructionLogic.getRoadMap(spawn.pos);
+            // constructionLogic.buildMap(spawn.room, roadMap, STRUCTURE_ROAD);
         }
     }
 }

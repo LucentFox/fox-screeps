@@ -1,15 +1,6 @@
-function findOptimalSource(creep){
-    var safeSources = creep.room.find(FIND_SOURCES, {filter: function(item){ 
-        if(item.pos.findInRange(FIND_HOSTILE_CREEPS, 5).length > 0) {return false;}
-        return true; 
-    }});
+var locatorLogic = require('logic.locator');
 
-    var optimalSource = safeSources[Math.floor(Math.random() * safeSources.length)];
-
-    return optimalSource ? optimalSource.id : null;
-}
-
-var brain = {
+var jobLogic = {
 
     recharge: function(creep) {
 
@@ -42,13 +33,13 @@ var brain = {
             //gather resources from a source
             if(creep.memory.optimalSourceId == null || typeof creep.memory.optimalSourceId === 'undefined')
             {
-                creep.memory.optimalSourceId = findOptimalSource(creep);
+                creep.memory.optimalSourceId = locatorLogic.findOptimalSource(creep);
             }
             
             var source = Game.getObjectById(creep.memory.optimalSourceId);
             if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
                 if(creep.moveTo(source, {visualizePathStyle: {stroke: '#ffaa00'}}) === ERR_NO_PATH){
-                    creep.memory.optimalSourceId = findOptimalSource(creep);
+                    creep.memory.optimalSourceId = locatorLogic.findOptimalSource(creep);
                 };
             }
 	    }
@@ -106,7 +97,8 @@ var brain = {
                 if(structure.structureType === STRUCTURE_CONTROLLER) {return false;}
                 if(structure.structureType === STRUCTURE_WALL && structure.hits > 20000) {return false;}
                 if(structure.hits > (structure.hitsMax * .9)) {return false;}
-                return true;
+                if(structure.structureType === STRUCTURE_ROAD) {return true;}
+                return false;
             } 
         })[0];
 
@@ -122,4 +114,4 @@ var brain = {
     }
 };
 
-module.exports = brain;
+module.exports = jobLogic;
