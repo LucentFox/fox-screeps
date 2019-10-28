@@ -7,12 +7,12 @@ var creepManager = {
             if(creep.spawning) { continue; } //don't try to direct creeps that are spawning.
 
             if(creep.memory.role == 'drone') {
+                roleDrone.populate();
                 roleDrone.activate(creep);
                 continue;
             }
 
-            //if creep doesn't have an assigned role then it defaults to a drone;
-            roleDrone.run(creep);
+           
         }
     }
 }
