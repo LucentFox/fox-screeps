@@ -57,17 +57,11 @@ var jobLogic = {
     deposit: function(creep) {
         creep.say('💰');
 
-        var target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-            filter: (structure) => {
-                return (structure.structureType == STRUCTURE_EXTENSION ||
-                        structure.structureType == STRUCTURE_SPAWN ||
-                        structure.structureType == STRUCTURE_TOWER) && 
-                        structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0;
-            }
-        });
-        if(target) {
-            if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+        var store = locatorLogic.findOptimalStore(creep);
+
+        if(store) {
+            if(creep.transfer(store, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(store, {visualizePathStyle: {stroke: '#00ff00'}});
             }
             return true;
         }
@@ -79,7 +73,8 @@ var jobLogic = {
     build: function(creep){
         creep.say('🛠');
 
-        var site = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
+        var site = locatorLogic.findOptimalSite(creep);
+
         if(site){
             if(creep.build(site) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(site, {visualizePathStyle: {stroke: '#ffffff'}});
