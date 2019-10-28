@@ -1,4 +1,5 @@
 var locatorLogic = require('logic.locator');
+var levelLogic = require('logic.level');
 
 var jobLogic = {
     updateStatus: function(creep) {
@@ -72,16 +73,17 @@ var jobLogic = {
     },
 
     pave: function(creep) {
+        var effectiveLevel = levelLogic.getEffectiveLevel(creep.room);
         var roomLevel = creep.room.controller.level;
         var energyCapacity = creep.room.energyCapacityAvailable;
-        if(roomLevel < 2 || energyCapacity < 400) {return;}
+        if(energyCapacity < 550) {return;}
 
         var x = creep.pos.x;
         var y = creep.pos.y;
         var terrainMap = creep.room.getTerrain();
-        if(terrainMap.get(x, y) === TERRAIN_MASK_SWAMP ||  (roomLevel >= 3 && energyCapacity >= 600)){
+        //if(terrainMap.get(x, y) === TERRAIN_MASK_SWAMP ||  (roomLevel >= 3 && energyCapacity >= 600)){
             creep.room.createConstructionSite(x, y, STRUCTURE_ROAD);
-        }
+        //}
     },
 
     deposit: function(creep) {
