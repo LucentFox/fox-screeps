@@ -38,7 +38,7 @@ var jobLogic = {
         creep.say('☠');
         var stones = creep.room.find(FIND_TOMBSTONES, {filter: function(item){
             if(item.pos.findInRange(FIND_HOSTILE_CREEPS, 5).length > 0) {return false;}
-            if(item.creep.store[RESOURCE_ENERGY] === 0 || item.store[RESOURCE_ENERGY] === 0) {return false;}
+            if(item.creep.store[RESOURCE_ENERGY] === 0 && item.store[RESOURCE_ENERGY] === 0) {return false;}
             return true;
         }});
 
