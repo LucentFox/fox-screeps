@@ -8,7 +8,7 @@ var roleScout = {
     populate: function(){
         var scouts = _.filter(Game.creeps, (creep) => creep.memory.role === roleName);
         
-        if(scouts.length < 1) {
+        if(scouts.length < 0) {
             var newName = roleName + Game.time;
             var retval = 0;
             

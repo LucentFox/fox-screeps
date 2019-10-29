@@ -131,6 +131,10 @@ var jobLogic = {
         if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
             creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ff00ff'}});
         }
+        //every once in a while bump a little closer to allow more creeps to fit in the vicinity
+        if(Game.time % 10 === 0){
+            creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ff00ff'}});
+        }
     },
 
     repair: function(creep){
