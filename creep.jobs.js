@@ -1,5 +1,5 @@
 var locatorLogic = require('logic.locator');
-var levelLogic = require('logic.room');
+var levelLogic = require('room.logic');
 var creepTasks = require('creep.tasks');
 
 var jobLogic = {

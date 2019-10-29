@@ -1,5 +1,5 @@
 var jobLogic = require('creep.jobs');
-var roomLogic = require('logic.room');
+var roomLogic = require('room.logic');
 
 const roleName = "drone";
 
@@ -8,7 +8,7 @@ var roleDrone = {
     populate: function(){
         var drones = _.filter(Game.creeps, (creep) => creep.memory.role === roleName);
         
-        if(drones.length < 8) {
+        if(drones.length < 10) {
             var newName = roleName + Game.time;
             var retval = 0;
             
@@ -48,7 +48,7 @@ var roleDrone = {
             jobLogic.gatherTombstone(creep) || 
             jobLogic.gatherRuins(creep) || 
             jobLogic.withdraw(creep) || 
-            jobLogic.gatherSource(creep);
+            jobLogic.gatherSource(creep)
         }
 
         //if we're all charged up, let's do some stuff

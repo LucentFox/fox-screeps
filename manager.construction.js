@@ -1,5 +1,5 @@
 var constructionLogic = require('logic.construction');
-var roomLogic = require('logic.room');
+var roomLogic = require('room.logic');
 
 var constructionManager = {
     run: function() {

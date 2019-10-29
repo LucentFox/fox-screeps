@@ -1,5 +1,5 @@
 var jobLogic = require('creep.jobs');
-var roomLogic = require('logic.room');
+var roomLogic = require('room.logic');
 
 const roleName = "excavator";
 

@@ -1,5 +1,5 @@
 var memoryManager = require('manager.memory');
-var statusManager = require('manager.status');
+var statusManager = require('status.manager');
 var constructionManager = require('manager.construction');
 var roleManager = require('role.manager');
 

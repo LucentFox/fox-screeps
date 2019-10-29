@@ -1,4 +1,4 @@
-var roomLogic = require('logic.room');
+var roomLogic = require('room.logic');
 
 var statusManager = {
     run: function() {
@@ -14,7 +14,9 @@ var statusManager = {
                 "⚡: " + roomInfo.energyAvailable,
                 "🔋: " + roomInfo.energyCapacity,
                 "🐜: " + _.filter(Game.creeps, function(item){return true;}).length,
-                "🏗: " + roomInfo.constructionSites
+                "🏗: " + roomInfo.constructionSites,
+                "⚡:" + roomInfo.containerAvailable,
+                "📦:" + roomInfo.containerCapacity
             ];
 
             for(var y = 0; y < statusText.length; y++)
