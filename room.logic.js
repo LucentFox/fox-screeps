@@ -12,16 +12,15 @@ var roomLogic = {
         
         return roomInfo;
     },
-    spawnCreeps: function(roleName, optimalPopulation, creepBuilds){
+    spawnCreeps: function(roleName, optimalPopulation, creepBuilds, enableAdaptivePopulation){
         for(var name in Game.spawns){
             var spawn = Game.spawns[name];
             var roomInfo = roomLogic.getRoomInfo(spawn.room);
             var youngCreepsInRole = _.filter(Game.creeps, (creep) => creep.memory.role === roleName && creep.ticksToLive > 150);
             
-            var overload = 0;
             if(roomInfo.containerAvailable >= 3500) {overload = optimalPopulation["overload"] || 0;}
 
-            if(youngCreepsInRole.length < optimalPopulation[roomInfo.roomLevel] + overload) {
+            if(youngCreepsInRole.length < optimalPopulation[roomInfo.roomLevel] || (enableAdaptivePopulation && roomInfo.containerAvailable >= 3500)) {
                 var newName = roleName + Game.time;
                 var retval = 0;
                 var retval = spawn.spawnCreep(creepBuilds[roomInfo.energyCapacity], newName, {memory: {role: roleName}});

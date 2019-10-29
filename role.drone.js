@@ -2,7 +2,7 @@ var creepJobs = require('creep.jobs');
 var roomLogic = require('room.logic');
 
 const roleName = "drone";
-const optimalPopulation = {overload: 1, 1:12, 2:12, 3:10, 4:4};
+const optimalPopulation = {1:12, 2:12, 3:10, 4:4};
 const creepBuilds = {
     300: [WORK,CARRY,MOVE,MOVE],
     350: [WORK,CARRY,MOVE,MOVE],
@@ -17,7 +17,7 @@ const creepBuilds = {
 
 var roleDrone = {
     populate: function(){
-        roomLogic.spawnCreeps(roleName, optimalPopulation, creepBuilds);
+        roomLogic.spawnCreeps(roleName, optimalPopulation, creepBuilds, true);
     },
     activate: function(creep) {
         var roomInfo = roomLogic.getRoomInfo(creep.room);
@@ -28,8 +28,9 @@ var roleDrone = {
 
         //if we need charging go for sources based on ones that decay first
         if(!creep.memory.charged){
-            if(creepJobs.touchSourch(creep)) {return;}
             if(creepJobs.gatherDropped(creep) || creepJobs.gatherTombstone(creep) || creepJobs.gatherRuins(creep)) {return;}
+            if(creepJobs.touchSourch(creep)) {return;}
+            
             if(roomInfo.containerAvailable < 150) { creep.memory.harvesting = true; }
             if(roomInfo.containerAvailable > 600) { creep.memory.harvesting = false; }
             if(creep.memory.harvesting ? creepJobs.gatherSource(creep) : creepJobs.withdraw(creep)){return;};
