@@ -2,7 +2,7 @@ var jobLogic = require('creep.jobs');
 var roomLogic = require('room.logic');
 
 const roleName = "drone";
-const optimalPopulation = {1:12, 2:12, 3:10, 4:6};
+const optimalPopulation = {1:12, 2:12, 3:10, 4:4};
 const creepBuilds = {
     300: [WORK,CARRY,MOVE,MOVE],
     350: [WORK,CARRY,MOVE,MOVE],
@@ -32,7 +32,7 @@ var roleDrone = {
             
             if(roomInfo.containerAvailable < 150) { creep.memory.harvesting = true; }
             if(roomInfo.containerAvailable > 1000) { creep.memory.harvesting = false; }
-            creep.memory.harvesting ? jobLogic.gatherSource(creep) : jobLogic.withdraw(creep);
+            if(creep.memory.harvesting ? jobLogic.gatherSource(creep) : jobLogic.withdraw(creep)){return;};
         }
 
         //if we're all charged up, let's do some stuff
