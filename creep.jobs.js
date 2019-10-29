@@ -67,7 +67,7 @@ var jobLogic = {
                 creep.memory.optimalSourceId = locatorLogic.findOptimalSource(creep);
             }
             var source = Game.getObjectById(creep.memory.optimalSourceId);
-            if(source.energy === 0){
+            if(!source || source.energy === 0){
                 creep.memory.optimalSourceId = locatorLogic.findOptimalSource(creep);
                 return;
             }
