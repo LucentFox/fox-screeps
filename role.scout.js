@@ -6,16 +6,19 @@ const roleName = "scout";
 var roleScout = {
     /** @param {Creep} creep **/
     populate: function(){
-        var drones = _.filter(Game.creeps, (creep) => creep.memory.role === roleName);
+        var scouts = _.filter(Game.creeps, (creep) => creep.memory.role === roleName);
         
-        if(drones.length < 3) {
+        if(scouts.length < 3) {
             var newName = roleName + Game.time;
             var retval = 0;
             
             for(var name in Game.spawns){
                 var spawn = Game.spawns[name];
                 var roomInfo = roomLogic.getRoomInfo(spawn.room);
-                var retval = spawn.spawnCreep([CLAIM,MOVE,MOVE], newName, {memory: {role: roleName}});
+                
+                if(roomInfo.roomLevel >= 3) {
+                    var retval = spawn.spawnCreep([CLAIM,MOVE,MOVE], newName, {memory: {role: roleName}});
+                }
             }
         }
 
