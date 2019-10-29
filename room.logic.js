@@ -11,6 +11,18 @@ var roomLogic = {
         
         
         return roomInfo;
+    },
+    spawnCreeps: function(roleName, optimalPopulation, creepBuilds){
+        for(var name in Game.spawns){
+            var spawn = Game.spawns[name];
+            var roomInfo = roomLogic.getRoomInfo(spawn.room);
+            var creepsInRole = _.filter(Game.creeps, (creep) => creep.memory.role === roleName);
+            if(creepsInRole.length < optimalPopulation[roomInfo.roomLevel]) {
+                var newName = roleName + Game.time;
+                var retval = 0;
+                var retval = spawn.spawnCreep(creepBuilds[roomInfo.energyCapacity], newName, {memory: {role: roleName}});
+                }
+            }
     }
 }
 

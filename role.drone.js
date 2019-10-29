@@ -16,20 +16,9 @@ const creepBuilds = {
 };
 
 var roleDrone = {
-    /** @param {Creep} creep **/
     populate: function(){
-        for(var name in Game.spawns){
-            var spawn = Game.spawns[name];
-            var roomInfo = roomLogic.getRoomInfo(spawn.room);
-
-            var creepsInRole = _.filter(Game.creeps, (creep) => creep.memory.role === roleName);
-            if(creepsInRole.length < optimalPopulation[roomInfo.roomLevel]) {
-                var newName = roleName + Game.time;
-                var retval = 0;
-                var retval = spawn.spawnCreep(creepBuilds[roomInfo.energyCapacity], newName, {memory: {role: roleName}});
-                }
-            }
-        },
+        roomLogic.spawnCreeps(roleName, optimalPopulation, creepBuilds);
+    },
     activate: function(creep) {
         var roomInfo = roomLogic.getRoomInfo(creep.room);
 
@@ -52,8 +41,8 @@ var roleDrone = {
             jobLogic.build(creep) ||
             jobLogic.repair(creep) ||
             jobLogic.upgrade(creep)
-            }
         }
+    }
 };
 
 module.exports = roleDrone;
