@@ -8,7 +8,7 @@ var statusManager = {
             var roomInfo = roomLogic.getRoomInfo(spawn.room);
 
             var x = spawn.pos.x - 10;
-            var offsetY = spawn.pos.y - 2;
+            var offsetY = spawn.pos.y + 1;
             var statusText = [
                 "💻: " + roomInfo.roomLevel,
                 "⚡: " + roomInfo.energyAvailable,
