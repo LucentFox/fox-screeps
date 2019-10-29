@@ -8,7 +8,7 @@ var roleScout = {
     populate: function(){
         var scouts = _.filter(Game.creeps, (creep) => creep.memory.role === roleName);
         
-        if(scouts.length < 3) {
+        if(scouts.length < 1) {
             var newName = roleName + Game.time;
             var retval = 0;
             
@@ -38,7 +38,8 @@ var roleScout = {
             creep.moveTo(7,49, {visualizePathStyle: {stroke: '#ff0000'}});
         }
 
-        creep.say("🧭");
+        //creep.say("🧭");
+        creep.say("🏴‍");
         
 	}
 };

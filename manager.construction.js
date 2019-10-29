@@ -13,11 +13,13 @@ var constructionManager = {
             var extensionMap = constructionLogic.getExtensionMap(spawn.pos, roomInfo.roomLevel);
             constructionLogic.buildMap(spawn.room, extensionMap, STRUCTURE_EXTENSION);
 
-            if(roomInfo.energyCapacity >= 550)
-            {
-                var roadMap = constructionLogic.getRoadMap(spawn.pos, roomInfo.roomLevel);
-                constructionLogic.buildMap(spawn.room, roadMap, STRUCTURE_ROAD);
-            }
+            constructionLogic.removeRoads(spawn);
+            
+            // if(roomInfo.energyCapacity >= 550)
+            // {
+            //     var roadMap = constructionLogic.getRoadMap(spawn.pos, roomInfo.roomLevel);
+            //     constructionLogic.buildMap(spawn.room, roadMap, STRUCTURE_ROAD);
+            // }
         }
     }
 }

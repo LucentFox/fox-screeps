@@ -15,6 +15,20 @@ var contructionLogic = {
     reset: function(spawn){
         spawn.room.find(FIND_MY_CONSTRUCTION_SITES, {filter: (site) => {site.remove();}});
     },
+    removeRoads: function(spawn){
+        if(Game.time % 100 > 0) {return};
+        
+        var structures = spawn.room.find(FIND_STRUCTURES, {filter: (structure) => {return structure.structureType !== STRUCTURE_ROAD}});
+        var roads = spawn.room.find(FIND_STRUCTURES, {filter: (structure) => {return structure.structureType === STRUCTURE_ROAD}});
+        for(var i = 0; i < structures.length; i++)
+        {
+            for(var j = 0; j < roads.length; j++)
+            {
+                if(structures[i].pos.x === roads[j].pos.x && structures[i].pos.y === roads[j].pos.y)
+                roads[j].destroy();
+            }
+        }
+    },
     getExtensionMap: function(centerPosition, roomLevel){
         var x = centerPosition.x;
         var y = centerPosition.y;

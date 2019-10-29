@@ -81,6 +81,7 @@ var jobLogic = {
     pave: function(creep) {
         var roomInfo = levelLogic.getRoomInfo(creep.room);
         if(roomInfo.energyCapacity < 550 || roomInfo.constructionSites >= 5) {return;}
+        if(creep.pos.lookFor(LOOK_STRUCTURES).length > 0) {return;}
 
         var x = creep.pos.x;
         var y = creep.pos.y;
