@@ -20,7 +20,7 @@ var roleDrone = {
                 var newName = roleName + Game.time;
                 var retval = 0;
                 
-                var retval = spawn.spawnCreep(creepBuilds[roomInfo.evergyAvailable], newName, {memory: {role: roleName}});
+                var retval = spawn.spawnCreep(creepBuilds[roomInfo.energyCapacity], newName, {memory: {role: roleName}});
                 
             }
         }

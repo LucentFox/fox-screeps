@@ -26,7 +26,7 @@ var roleDrone = {
             if(creepsInRole.length < optimalPopulation[roomInfo.roomLevel]) {
                 var newName = roleName + Game.time;
                 var retval = 0;
-                var retval = spawn.spawnCreep(creepBuilds[roomInfo.energyAvailable], newName, {memory: {role: roleName}});
+                var retval = spawn.spawnCreep(creepBuilds[roomInfo.energyCapacity], newName, {memory: {role: roleName}});
                 }
             }
         },
@@ -39,11 +39,11 @@ var roleDrone = {
 
         //if we need charging go for sources based on ones that decay first
         if(!creep.memory.charged){
-            jobLogic.gatherDropped(creep) || 
-            jobLogic.gatherTombstone(creep) || 
-            jobLogic.gatherRuins(creep) || 
-            jobLogic.withdraw(creep) || 
-            jobLogic.gatherSource(creep)
+            if(jobLogic.gatherDropped(creep) || jobLogic.gatherTombstone(creep) || jobLogic.gatherRuins(creep)) {return;}
+            
+            if(roomInfo.containerAvailable < 150) { creep.memory.harvesting = true; }
+            if(roomInfo.containerAvailable > 1000) { creep.memory.harvesting = false; }
+            creep.memory.harvesting ? jobLogic.gatherSource(creep) : jobLogic.withdraw(creep);
         }
 
         //if we're all charged up, let's do some stuff
