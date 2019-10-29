@@ -2,7 +2,7 @@ var jobLogic = require('creep.jobs');
 var roomLogic = require('room.logic');
 
 const roleName = "drone";
-const optimalPopulation = {1:12, 2:12, 3:10, 4:4};
+const optimalPopulation = {overload: 1, 1:12, 2:12, 3:10, 4:2};
 const creepBuilds = {
     300: [WORK,CARRY,MOVE,MOVE],
     350: [WORK,CARRY,MOVE,MOVE],
