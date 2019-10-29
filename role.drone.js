@@ -30,8 +30,9 @@ var roleDrone = {
         if(!creep.memory.charged){
             if(jobLogic.gatherDropped(creep) || jobLogic.gatherTombstone(creep) || jobLogic.gatherRuins(creep)) {return;}
             
+
             if(roomInfo.containerAvailable < 150) { creep.memory.harvesting = true; }
-            if(roomInfo.containerAvailable > 1000) { creep.memory.harvesting = false; }
+            if(roomInfo.containerAvailable > 600) { creep.memory.harvesting = false; }
             if(creep.memory.harvesting ? jobLogic.gatherSource(creep) : jobLogic.withdraw(creep)){return;};
         }
 
