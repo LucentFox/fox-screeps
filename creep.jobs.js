@@ -53,7 +53,16 @@ var jobLogic = {
         }
         return false;
     },
-
+    //sources only start to regenerate after first touched, go a bump it so that we get the regen counter started.
+    touchSourch: function(creep){
+        var source = locatorLogic.findPristineSource(creep);
+        if(source) {
+            creepTasks.moveHarvest(creep, source);
+            return true;
+        }
+        return false;
+        creep.say('👇');
+    },
     gatherSource: function(creep) {
             //var sourceLabel = creep.memory.optimalSourceId ? creep.memory.optimalSourceId.substring(creep.memory.optimalSourceId.length - 2) : "?"
             //creep.say('⛏ (' + sourceLabel + ')');

@@ -1,4 +1,4 @@
-var jobLogic = require('creep.jobs');
+var creepJobs = require('creep.jobs');
 var roomLogic = require('room.logic');
 
 const roleName = "drone";
@@ -23,25 +23,24 @@ var roleDrone = {
         var roomInfo = roomLogic.getRoomInfo(creep.room);
 
         //items that always happen
-        jobLogic.updateStatus(creep);
-        jobLogic.pave(creep);
+        creepJobs.updateStatus(creep);
+        creepJobs.pave(creep);
 
         //if we need charging go for sources based on ones that decay first
         if(!creep.memory.charged){
-            if(jobLogic.gatherDropped(creep) || jobLogic.gatherTombstone(creep) || jobLogic.gatherRuins(creep)) {return;}
-            
-
+            if(creepJobs.touchSourch(creep)) {return;}
+            if(creepJobs.gatherDropped(creep) || creepJobs.gatherTombstone(creep) || creepJobs.gatherRuins(creep)) {return;}
             if(roomInfo.containerAvailable < 150) { creep.memory.harvesting = true; }
             if(roomInfo.containerAvailable > 600) { creep.memory.harvesting = false; }
-            if(creep.memory.harvesting ? jobLogic.gatherSource(creep) : jobLogic.withdraw(creep)){return;};
+            if(creep.memory.harvesting ? creepJobs.gatherSource(creep) : creepJobs.withdraw(creep)){return;};
         }
 
         //if we're all charged up, let's do some stuff
         if(creep.memory.charged){
-            jobLogic.deposit(creep) ||
-            jobLogic.build(creep) ||
-            jobLogic.repair(creep) ||
-            jobLogic.upgrade(creep)
+            creepJobs.deposit(creep) ||
+            creepJobs.build(creep) ||
+            creepJobs.repair(creep) ||
+            creepJobs.upgrade(creep)
         }
     }
 };

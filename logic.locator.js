@@ -1,4 +1,11 @@
 var locatorLogic = {
+    findPristineSource: function(creep){
+        creep.pos.findClosestByPath(FIND_SOURCES, {filter: function(source){ 
+            if(source.pos.findInRange(FIND_HOSTILE_CREEPS, 5).length > 0) {return false;}
+            if(source.energy === source.energyCapacity) {return true;}
+            return false; 
+        }});
+    },
     findOptimalSource: function(creep) {
         var safeSources = creep.room.find(FIND_SOURCES, {filter: function(item){ 
             if(item.pos.findInRange(FIND_HOSTILE_CREEPS, 5).length > 0) {return false;}
