@@ -44,11 +44,11 @@ var jobLogic = {
         }});
         
         if(stones.length){
-            creep.say('☠');
             var tombstone = stones[0];
             if(creep.withdraw(tombstone, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE){
                 creep.moveTo(tombstone, {visualizePathStyle: {stroke: '#ff0000'}});
             }
+            creep.say('☠');
             return true;
         }
         return false;
@@ -58,10 +58,10 @@ var jobLogic = {
         var source = locatorLogic.findPristineSource(creep);
         if(source) {
             creepTasks.moveHarvest(creep, source);
+            creep.say('👇');
             return true;
         }
         return false;
-        creep.say('👇');
     },
     gatherSource: function(creep) {
             //var sourceLabel = creep.memory.optimalSourceId ? creep.memory.optimalSourceId.substring(creep.memory.optimalSourceId.length - 2) : "?"
