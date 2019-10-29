@@ -2,39 +2,34 @@ var jobLogic = require('creep.jobs');
 var roomLogic = require('room.logic');
 
 const roleName = "drone";
+const optimalPopulation = {1:12, 2:12, 3:10, 4:6};
+const creepBuilds = {
+    300: [WORK,CARRY,MOVE,MOVE],
+    350: [WORK,CARRY,MOVE,MOVE],
+    400: [WORK,CARRY,MOVE,MOVE],
+    450: [WORK,CARRY,MOVE,MOVE],
+    500: [WORK,CARRY,MOVE,MOVE],
+    550: [WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE],
+    600: [WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE],
+    800: [WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE],
+    1300: [WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE]
+};
 
 var roleDrone = {
     /** @param {Creep} creep **/
     populate: function(){
-        var drones = _.filter(Game.creeps, (creep) => creep.memory.role === roleName);
-        
-        if(drones.length < 10) {
-            var newName = roleName + Game.time;
-            var retval = 0;
-            
-            for(var name in Game.spawns){
-                var spawn = Game.spawns[name];
-                var roomInfo = roomLogic.getRoomInfo(spawn.room);
+        for(var name in Game.spawns){
+            var spawn = Game.spawns[name];
+            var roomInfo = roomLogic.getRoomInfo(spawn.room);
 
-                if(spawn.room.energyCapacityAvailable >= 800)
-                {
-                    var retval = spawn.spawnCreep([WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], newName, {memory: {role: roleName}});
-                }
-                else if(spawn.room.energyCapacityAvailable >= 600)
-                {
-                    var retval = spawn.spawnCreep([WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE], newName, {memory: {role: roleName}});
-                }
-                else if(spawn.room.energyCapacityAvailable >= 550)
-                {
-                    var retval = spawn.spawnCreep([WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE], newName, {memory: {role: roleName}});
-                }
-                else{
-                    var retval = spawn.spawnCreep([WORK,CARRY,MOVE,MOVE], newName, {memory: {role: roleName}});
+            var creepsInRole = _.filter(Game.creeps, (creep) => creep.memory.role === roleName);
+            if(creepsInRole.length < optimalPopulation[roomInfo.roomLevel]) {
+                var newName = roleName + Game.time;
+                var retval = 0;
+                var retval = spawn.spawnCreep(creepBuilds[roomInfo.energyAvailable], newName, {memory: {role: roleName}});
                 }
             }
-        }
-
-    },
+        },
     activate: function(creep) {
         var roomInfo = roomLogic.getRoomInfo(creep.room);
 
@@ -57,8 +52,8 @@ var roleDrone = {
             jobLogic.build(creep) ||
             jobLogic.repair(creep) ||
             jobLogic.upgrade(creep)
+            }
         }
-	}
 };
 
 module.exports = roleDrone;

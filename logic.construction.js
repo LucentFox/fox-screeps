@@ -43,7 +43,13 @@ var contructionLogic = {
         }
         
         if(roomLevel === 4){
-            map = [[x-2,y+2],[x+2,y-2]];
+            map = [
+                [x-2,y+2],[x+2,y-2],
+                [x-1,y-3],[x+1,y-3],
+                [x-1,y+3],[x+1,y+3],
+                [x-3,y-1],[x+3,y-1],
+                [x-3,y+1],[x+3,y+1]
+            ];
         }
 
         return map;

@@ -12,9 +12,9 @@ var constructionManager = {
             
             var extensionMap = constructionLogic.getExtensionMap(spawn.pos, roomInfo.roomLevel);
             constructionLogic.buildMap(spawn.room, extensionMap, STRUCTURE_EXTENSION);
-
-            constructionLogic.removeRoads(spawn);
             
+            constructionLogic.removeRoads(spawn);
+
             // if(roomInfo.energyCapacity >= 550)
             // {
             //     var roadMap = constructionLogic.getRoadMap(spawn.pos, roomInfo.roomLevel);
