@@ -12,6 +12,7 @@ var roleDrone = {
         roomLogic.spawnCreeps(roleName, optimalPopulation, creepBuilds);
     },
     activate: function(creep) {
+        return;
         jobLogic.store(creep);
         if(creep.store.getFreeCapacity() > 10) {
             jobLogic.gatherSource(creep);

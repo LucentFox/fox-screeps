@@ -19,7 +19,7 @@ var roomLogic = {
             var youngCreepsInRole = _.filter(Game.creeps, (creep) => creep.memory.role === roleName && creep.ticksToLive > 150);
             
             var overload = 0;
-            if(roomInfo.containerAvailable > 4000) {overload = optimalPopulation["overload"] || 0;}
+            if(roomInfo.containerAvailable >= 3500) {overload = optimalPopulation["overload"] || 0;}
 
             if(youngCreepsInRole.length < optimalPopulation[roomInfo.roomLevel] + overload) {
                 var newName = roleName + Game.time;
