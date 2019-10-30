@@ -144,6 +144,8 @@ var jobLogic = {
         if(Game.time % 10 === 0){
             creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ff00ff'}});
         }
+
+        return true;
     },
 
     repair: function(creep){
@@ -153,7 +155,7 @@ var jobLogic = {
                 if(structure.structureType === STRUCTURE_ROAD) {return false;}
                 if(structure.structureType === STRUCTURE_CONTROLLER) {return false;}
                 if(structure.structureType === STRUCTURE_WALL && structure.hits > 20000) {return false;}
-                if(structure.hits > (structure.hitsMax * .1)) {return false;}
+                if(structure.hits === structure.hitsMax) {return false;}
                 return true;
             } 
         })[0];
