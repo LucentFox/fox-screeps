@@ -26,6 +26,16 @@ var roomLogic = {
                 var retval = spawn.spawnCreep(creepBuilds[roomInfo.energyCapacity], newName, {memory: {role: roleName}});
                 }
             }
+    },
+    bootstrapCreeps: function(roleName, build){
+        if(Object.keys(Game.creeps).length <= 2){
+            console.log("no creeps starting over...");
+            var newName = roleName + Game.time;
+            for(var name in Game.spawns){
+                var spawn = Game.spawns[name];
+                spawn.spawnCreep(build, newName, {memory: {role: roleName}});
+            }
+        }
     }
 }
 

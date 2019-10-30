@@ -18,6 +18,8 @@ const creepBuilds = {
 var roleDrone = {
     populate: function(){
         roomLogic.spawnCreeps(roleName, optimalPopulation, creepBuilds, true);
+
+        roomLogic.bootstrapCreeps(roleName, creepBuilds[300]);
     },
     activate: function(creep) {
         var roomInfo = roomLogic.getRoomInfo(creep.room);
@@ -30,7 +32,7 @@ var roleDrone = {
         if(!creep.memory.charged){
             if(creepJobs.gatherDropped(creep) || creepJobs.gatherTombstone(creep) || creepJobs.gatherRuins(creep)) {return;}
             if(creepJobs.touchSourch(creep)) {return;}
-            
+
             if(roomInfo.containerAvailable < 150) { creep.memory.harvesting = true; }
             if(roomInfo.containerAvailable > 600) { creep.memory.harvesting = false; }
             if(creep.memory.harvesting ? creepJobs.gatherSource(creep) : creepJobs.withdraw(creep)){return;};
