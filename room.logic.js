@@ -1,7 +1,7 @@
 var roomLogic = {
     getRoomInfo: function(room) {
         var roomInfo = {
-            roomLevel: room.controller.level,
+            roomLevel: room.controller ? room.controller.level : 0,
             energyAvailable: room.energyAvailable,
             energyCapacity: room.energyCapacityAvailable,
             constructionSites: room.find(FIND_CONSTRUCTION_SITES).length,

@@ -52,6 +52,14 @@ var contructionLogic = {
             ];
         }
 
+        if(roomLevel === 5){
+            map = [
+                [x-3,y],[x+3,y],[x,y+3],[x,y-3],
+                [x-1,y-2],[x-2,y+1],[x+1,y+2],[x+2,y-1],
+                [x-3,y-3],[x+3,y+3],[x-3,y+3],[x+3,y-3],
+            ];
+        }
+
         return map;
     },
     getRoadMap: function(centerPosition, roomLevel){
