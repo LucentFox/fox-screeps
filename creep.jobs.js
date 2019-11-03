@@ -3,6 +3,27 @@ var levelLogic = require('room.logic');
 var creepTasks = require('creep.tasks');
 
 var jobLogic = {
+    replenish: function(creep){
+        if(creep.ticksToLive < 250 || creep.memory.replenish){
+
+            creep.memory.replenish = true;
+            if(creep.ticksToLive >=1450) {creep.memory.replenish = false;}
+
+            var spawns = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return structure.structureType === STRUCTURE_SPAWN;}});
+
+            if(spawns.length){
+                var spawn = spawns[0];
+                creep.moveTo(spawn);
+                spawn.renewCreep(creep);
+                creep.say('➕');
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    },
+
     updateStatus: function(creep) {
         if(typeof creep.memory.charged === 'undefined' || (creep.memory.charged && creep.store[RESOURCE_ENERGY] == 0)) {
             creep.memory.charged = false;

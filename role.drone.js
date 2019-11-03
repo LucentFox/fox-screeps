@@ -27,6 +27,8 @@ var roleDrone = {
         var roomInfo = roomLogic.getRoomInfo(creep.room);
 
         //items that always happen
+        if(creepJobs.replenish(creep)){return;};
+
         creepJobs.updateStatus(creep);
         creepJobs.pave(creep);
 

@@ -1,4 +1,4 @@
-var jobLogic = require('creep.jobs');
+var creepJobs = require('creep.jobs');
 var roomLogic = require('room.logic');
 
 const roleName = "excavator";
@@ -14,9 +14,12 @@ var roleDrone = {
         roomLogic.spawnCreeps(roleName, optimalPopulation, creepBuilds, false);
     },
     activate: function(creep) {
-        jobLogic.store(creep);
+
+        if(creepJobs.replenish(creep)){return;};
+
+        creepJobs.store(creep);
         if(creep.store.getFreeCapacity() > 10) {
-            jobLogic.gatherSource(creep);
+            creepJobs.gatherSource(creep);
         }
 	}
 };
