@@ -19,7 +19,7 @@ const creepBuilds = {
 
 var roleScavenger = {
     populate: function(){
-        roomLogic.spawnCreeps(roleName, optimalPopulation, creepBuilds, true);
+        roomLogic.spawnCreeps(roleName, optimalPopulation, creepBuilds, true, false);
     },
     activate: function(creep) {
         var roomInfo = roomLogic.getRoomInfo(creep.room);

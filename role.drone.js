@@ -19,7 +19,7 @@ const creepBuilds = {
 
 var roleDrone = {
     populate: function(){
-        roomLogic.spawnCreeps(roleName, optimalPopulation, creepBuilds, true);
+        roomLogic.spawnCreeps(roleName, optimalPopulation, creepBuilds, true, true);
 
         roomLogic.bootstrapCreeps(roleName, creepBuilds[300]);
     },
