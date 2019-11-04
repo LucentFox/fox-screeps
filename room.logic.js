@@ -17,6 +17,7 @@ var roomLogic = {
             var spawn = Game.spawns[name];
             var roomInfo = roomLogic.getRoomInfo(spawn.room);
             var youngCreepsInRole = _.filter(Game.creeps, (creep) => creep.memory.role === roleName && creep.ticksToLive > 150);
+            //console.log(roleName, ": ", youngCreepsInRole);
             
             if(roomInfo.containerAvailable >= 3500) {overload = optimalPopulation["overload"] || 0;}
 

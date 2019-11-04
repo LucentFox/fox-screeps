@@ -23,7 +23,7 @@ var roleDrone = {
     },
     activate: function(creep) {
         var roomInfo = roomLogic.getRoomInfo(creep.room);
-
+        
         const exit = creep.pos.findClosestByRange(FIND_EXIT_RIGHT);
         if(exit && creep.moveTo(exit, {visualizePathStyle: {stroke: '#ffff00'}}) === 0) {return;};
 

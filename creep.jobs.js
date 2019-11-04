@@ -9,7 +9,7 @@ var jobLogic = {
             creep.memory.replenish = true;
             if(creep.ticksToLive >=1450) {creep.memory.replenish = false;}
 
-            var spawns = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return structure.structureType === STRUCTURE_SPAWN;}});
+            var spawns = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {return structure.structureType === STRUCTURE_SPAWN && !structure.spawning;}});
 
             if(spawns.length){
                 var spawn = spawns[0];
@@ -99,6 +99,8 @@ var jobLogic = {
             var source = Game.getObjectById(creep.memory.optimalSourceId);
             if(!source || source.energy === 0){
                 creep.memory.optimalSourceId = locatorLogic.findOptimalSource(creep);
+                //since the source is empty, before switching again, just use up what we have.
+                creep.memory.charged = true;
                 return;
             }
             if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
@@ -110,7 +112,7 @@ var jobLogic = {
 
     pave: function(creep) {
         var roomInfo = levelLogic.getRoomInfo(creep.room);
-        if(roomInfo.energyCapacity < 550 || roomInfo.constructionSites >= 5) {return;}
+        if(roomInfo.roomLevel < 3 || roomInfo.constructionSites >= 5) {return;}
         if(creep.pos.lookFor(LOOK_STRUCTURES).length > 0) {return;}
 
         var x = creep.pos.x;
