@@ -24,22 +24,24 @@ var roleScout = {
 
     },
     activate: function(creep) {
+        creep.say("🧭");
+        const exit = creep.pos.findClosestByRange(FIND_EXIT_RIGHT);
+        if(exit && creep.moveTo(exit, {visualizePathStyle: {stroke: '#ffff00'}}) === 0) {return;};
+
         var roomInfo = roomLogic.getRoomInfo(creep.room);
-
-        var controller = Game.getObjectById('5982feabb097071b4adc1587');
         
-        if(controller && creep.room.name === controller.room.name) {
-            creep.claimController(controller);
-            if(creep.reserveController(controller) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(controller, {visualizePathStyle: {stroke: '#ff0000'}});
-            }
+        //claim or reserver controller in room
+        var controller = creep.room.controller;
+        if(controller) {
+            creep.say("🏴‍");
+            if(creep.claimController(controller) === ERR_NOT_IN_RANGE){
+                creep.moveTo(controller, {visualizePathStyle: {stroke: '#00ff00'}});
+            };
+            // if(creep.reserveController(controller) == ERR_NOT_IN_RANGE) {
+            //     creep.moveTo(controller, {visualizePathStyle: {stroke: '#ff0000'}});
+            // }
         }
-        else{
-            creep.moveTo(7,49, {visualizePathStyle: {stroke: '#ff0000'}});
-        }
-
-        //creep.say("🧭");
-        creep.say("🏴‍");
+        
         
 	}
 };

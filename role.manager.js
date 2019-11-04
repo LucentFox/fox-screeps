@@ -1,12 +1,14 @@
 var roleDrone = require('role.drone');
 var roleExcavator = require('role.excavator');
 var roleScout = require('role.scout');
+var roleScavenger = require('role.scavenger');
 
 var creepManager = {
     run: function() {
         roleDrone.populate();
         roleExcavator.populate();
         roleScout.populate();
+        roleScavenger.populate();
 
         for(var name in Game.creeps) {
             var creep = Game.creeps[name];
@@ -14,6 +16,7 @@ var creepManager = {
             if(creep.memory.role == 'drone') { roleDrone.activate(creep); continue; }
             if(creep.memory.role == 'excavator') { roleExcavator.activate(creep); continue; }
             if(creep.memory.role == 'scout') { roleScout.activate(creep); continue; }
+            if(creep.memory.role == 'scavenger') {roleScavenger.activate(creep); continue;}
         }
     }
 }
