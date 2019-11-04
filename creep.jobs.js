@@ -38,8 +38,10 @@ var jobLogic = {
    
     gatherDropped: function(creep){
         //gather dropped resources as a priority
-        var dropped_resources = creep.room.find(FIND_DROPPED_RESOURCES, {filter: function(item){ 
-            if(item.pos.findInRange(FIND_HOSTILE_CREEPS, 5).length > 0) {return false;}
+        var dropped_resources = creep.room.find(FIND_DROPPED_RESOURCES, {filter: function(resource){
+            if(resource.resourceType !== RESOURCE_ENERGY) {return false;}
+            if(resource.amount < 30) {return false;} 
+            if(resource.pos.findInRange(FIND_HOSTILE_CREEPS, 5).length > 0) {return false;}
             return true; 
         }});
         if(dropped_resources.length){
@@ -58,9 +60,9 @@ var jobLogic = {
     },
 
     gatherTombstone: function(creep){
-        var stones = creep.room.find(FIND_TOMBSTONES, {filter: function(item){
-            if(item.pos.findInRange(FIND_HOSTILE_CREEPS, 10).length > 0) {return false;}
-            if(item.creep.store[RESOURCE_ENERGY] === 0 && item.store[RESOURCE_ENERGY] === 0) {return false;}
+        var stones = creep.room.find(FIND_TOMBSTONES, {filter: function(stone){
+            if(stone.pos.findInRange(FIND_HOSTILE_CREEPS, 10).length > 0) {return false;}
+            if(stone.creep.store[RESOURCE_ENERGY] < 50 && stone.store[RESOURCE_ENERGY] < 50) {return false;}
             return true;
         }});
         
@@ -79,19 +81,13 @@ var jobLogic = {
         var source = locatorLogic.findPristineSource(creep);
         if(source) {
             creepTasks.moveHarvest(creep, source);
+            creep.memory.optimalSourceId = source.id;
             creep.say('👇');
             return true;
         }
         return false;
     },
     gatherSource: function(creep) {
-            //var sourceLabel = creep.memory.optimalSourceId ? creep.memory.optimalSourceId.substring(creep.memory.optimalSourceId.length - 2) : "?"
-            //creep.say('⛏ (' + sourceLabel + ')');
-            //creep.say('⛏');
-
-            //gather resources from a source
-           
-
             if(creep.memory.optimalSourceId == null || typeof creep.memory.optimalSourceId === 'undefined')
             {
                 creep.memory.optimalSourceId = locatorLogic.findOptimalSource(creep);
@@ -101,13 +97,16 @@ var jobLogic = {
                 creep.memory.optimalSourceId = locatorLogic.findOptimalSource(creep);
                 //since the source is empty, before switching again, just use up what we have.
                 creep.memory.charged = true;
-                return;
+                return false;
             }
             if(creep.harvest(source) == ERR_NOT_IN_RANGE) {
                 if(creep.moveTo(source, {visualizePathStyle: {stroke: '#ffaa00'}}) === ERR_NO_PATH){
                     creep.memory.optimalSourceId = locatorLogic.findOptimalSource(creep);
                 };
             }
+            creep.say('⛏');
+            return true;
+
     },
 
     pave: function(creep) {
@@ -142,15 +141,15 @@ var jobLogic = {
         }
     },
     build: function(creep){
-        creep.say('🛠');
-
+        
         var site = locatorLogic.findOptimalSite(creep);
-
-        if(site){
+        
+        if(site && creep.store.getUsedCapacity(RESOURCE_ENERGY) > 0){
             if(creep.build(site) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(site, {visualizePathStyle: {stroke: '#0000ff'}});
-                }
-                return true;
+                creep.moveTo(site, {visualizePathStyle: {stroke: '#0000ff'}});
+            }
+            creep.say('🛠');
+            return true;
         }
         else {
             return false;
@@ -192,6 +191,10 @@ var jobLogic = {
         else {
           return false;
         }
+    },
+    noop: function(creep){
+        creep.say('⏳');
+        return true;
     }
 };
 

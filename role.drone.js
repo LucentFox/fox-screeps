@@ -40,6 +40,7 @@ var roleDrone = {
             if(roomInfo.containerAvailable < 150) { creep.memory.harvesting = true; }
             if(roomInfo.containerAvailable > 600) { creep.memory.harvesting = false; }
             if(creep.memory.harvesting ? creepJobs.gatherSource(creep) : creepJobs.withdraw(creep)){return;};
+            creepJobs.noop(creep);
         }
 
         //if we're all charged up, let's do some stuff

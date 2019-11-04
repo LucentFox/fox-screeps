@@ -49,6 +49,10 @@ var locatorLogic = {
         return bigStore;
     },
     findOptimalSite: function(creep){
+        //prioritize building spawns if there is one in the room.
+        var spawns = creep.room.find(FIND_CONSTRUCTION_SITES, {filter: (site) => site.structureType === STRUCTURE_SPAWN});
+        if(spawns.length){return spawns[0];}
+
         return creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
     }
 }

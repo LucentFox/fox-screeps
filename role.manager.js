@@ -8,7 +8,7 @@ var creepManager = {
         roleDrone.populate();
         roleExcavator.populate();
         //roleScout.populate();
-        //roleScavenger.populate();
+        roleScavenger.populate();
 
         for(var name in Game.creeps) {
             var creep = Game.creeps[name];
