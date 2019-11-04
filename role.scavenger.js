@@ -2,7 +2,7 @@ var creepJobs = require('creep.jobs');
 var roomLogic = require('room.logic');
 
 const roleName = "scavenger";
-const optimalPopulation = {1:12, 2:12, 3:10, 4:4, 5:8, 6:8, 7:8, 8:8};
+const optimalPopulation = {1:12, 2:12, 3:10, 4:4, 5:6, 6:6, 7:6, 8:6};
 const creepBuilds = {
     300: [WORK,CARRY,MOVE,MOVE],
     350: [WORK,CARRY,MOVE,MOVE],
