@@ -33,8 +33,8 @@ var contructionLogic = {
         var x = centerPosition.x;
         var y = centerPosition.y;
         var map = [];
-
-        if(roomLevel === 2){
+        //TODO: switch map to append at each level so that if we miss a level it will still apply past builds
+        if(roomLevel >= 2 && roomLevel < 4) {
             map = [[x-1,y-1],[x+1,y-1],[x+1,y+1],[x-1,y+1],[x,y-2]];
         }
         
