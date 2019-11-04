@@ -19,7 +19,7 @@ const creepBuilds = {
 
 var roleDrone = {
     populate: function(){
-        roomLogic.spawnCreeps(roleName, optimalPopulation, creepBuilds, true, true);
+        roomLogic.spawnCreeps(roleName, optimalPopulation, creepBuilds, true, false);
 
         roomLogic.bootstrapCreeps(roleName, creepBuilds[300]);
     },
@@ -27,7 +27,7 @@ var roleDrone = {
         var roomInfo = roomLogic.getRoomInfo(creep.room);
 
         //items that always happen
-        //if(creepJobs.replenish(creep)){return;};
+        if(creepJobs.replenish(creep)){return;};
 
         creepJobs.updateStatus(creep);
         creepJobs.pave(creep);
