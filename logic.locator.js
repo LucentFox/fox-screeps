@@ -53,6 +53,9 @@ var locatorLogic = {
         var spawns = creep.room.find(FIND_CONSTRUCTION_SITES, {filter: (site) => site.structureType === STRUCTURE_SPAWN});
         if(spawns.length){return spawns[0];}
 
+        var extensions = creep.room.find(FIND_CONSTRUCTION_SITES, {filter: (site) => site.structureType === STRUCTURE_EXTENSION});
+        if(extensions.length){return extensions[0];}
+
         return creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
     }
 }
