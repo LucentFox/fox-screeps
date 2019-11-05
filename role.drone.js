@@ -1,5 +1,5 @@
-var creepJobs = require('creep.jobs');
-var roomLogic = require('room.logic');
+let creepJobs = require('creep.jobs');
+let roomLogic = require('room.logic');
 
 const roleName = "drone";
 const optimalPopulation = {1:6, 2:6, 3:6, 4:4, 5:4, 6:4, 7:4, 8:4};
@@ -19,7 +19,7 @@ const creepBuilds = {
 
 var roleDrone = {
     populate: function(){
-        roomLogic.spawnCreeps(roleName, optimalPopulation, creepBuilds, true, false);
+        roomLogic.spawnRoomCreeps(roleName, optimalPopulation, creepBuilds, true);
 
         roomLogic.bootstrapCreeps(roleName, creepBuilds[300]);
     },

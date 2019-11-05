@@ -11,14 +11,27 @@ var roomLogic = {
         
         return roomInfo;
     },
-    spawnCreeps: function(roleName, optimalPopulation, creepBuilds, enableAdaptivePopulation, populationPerRoom){
+    spawnGlobalCreeps: function(roleName, optimalPopulation, creepBuilds, enableAdaptivePopulation){
         for(var name in Game.spawns){
             var spawn = Game.spawns[name];
             var roomInfo = roomLogic.getRoomInfo(spawn.room);
             var youngCreepsInRole = _.filter(Game.creeps, (creep) => (creep.memory.role === roleName && creep.ticksToLive > 150));
-            //console.log(spawn.room.name, ":", roleName, ":", youngCreepsInRole);
             
             if(youngCreepsInRole.length < optimalPopulation[roomInfo.roomLevel] || (enableAdaptivePopulation && roomInfo.containerAvailable >= 3500)) {
+                var newName = roleName + Game.time;
+                var retval = 0;
+                var retval = spawn.spawnCreep(creepBuilds[roomInfo.energyCapacity], newName, {memory: {role: roleName}});
+                }
+            }
+    },
+    spawnRoomCreeps: function(roleName, optimalPopulation, creepBuilds, enableAdaptivePopulation){
+        for(var name in Game.spawns){
+            var spawn = Game.spawns[name];
+            var roomInfo = roomLogic.getRoomInfo(spawn.room);
+            var youngCreepsInRole = spawn.room.find(FIND_MY_CREEPS, {filter: (creep) => creep.memory.role === roleName && creep.ticksToLive > 150});
+            
+            if(youngCreepsInRole.length < optimalPopulation[roomInfo.roomLevel] || (enableAdaptivePopulation && roomInfo.containerAvailable >= 3500)) {
+                console.log(spawn.room.name, ":", roleName, ":", youngCreepsInRole.length,"/",optimalPopulation[roomInfo.roomLevel]);
                 var newName = roleName + Game.time;
                 var retval = 0;
                 var retval = spawn.spawnCreep(creepBuilds[roomInfo.energyCapacity], newName, {memory: {role: roleName}});

@@ -20,7 +20,7 @@ const creepBuilds = {
 
 var roleScavenger = {
     populate: function(){
-        roomLogic.spawnCreeps(roleName, optimalPopulation, creepBuilds, false, false);
+        roomLogic.spawnGlobalCreeps(roleName, optimalPopulation, creepBuilds, false);
     },
     activate: function(creep) {
         const exit = creep.pos.findClosestByRange(FIND_EXIT_RIGHT);

@@ -13,7 +13,7 @@ var statusManager = {
                 "💻: " + roomInfo.roomLevel,
                 "⚡: " + roomInfo.energyAvailable,
                 "🔋: " + roomInfo.energyCapacity,
-                "🐜: " + _.filter(Game.creeps, function(item){return true;}).length,
+                "🐜: " + spawn.room.find(FIND_MY_CREEPS).length,
                 "🏗: " + roomInfo.constructionSites,
                 "⚡:" + roomInfo.containerAvailable,
                 "📦:" + roomInfo.containerCapacity

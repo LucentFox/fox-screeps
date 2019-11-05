@@ -198,7 +198,7 @@ var jobLogic = {
     },
     noop: function(creep){
         creep.say('⏳');
-        creep.moveTo(room.controller);
+        creep.moveTo(creep.room.controller);
         return true;
     }
 };
