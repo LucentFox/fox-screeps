@@ -27,7 +27,7 @@ var roleDrone = {
         var roomInfo = roomLogic.getRoomInfo(creep.room);
 
         //items that always happen
-        if(creepJobs.replenish(creep)){return;};
+        //if(creepJobs.replenish(creep)){return;};
 
         creepJobs.updateStatus(creep);
         creepJobs.pave(creep);
@@ -40,7 +40,8 @@ var roleDrone = {
             if(roomInfo.containerAvailable < 150) { creep.memory.harvesting = true; }
             if(roomInfo.containerAvailable > 600) { creep.memory.harvesting = false; }
             if(creep.memory.harvesting ? creepJobs.gatherSource(creep) : creepJobs.withdraw(creep)){return;};
-            creepJobs.noop(creep);
+            
+            if(creepJobs.noop(creep)) {return;};
         }
 
         //if we're all charged up, let's do some stuff

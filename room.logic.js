@@ -15,7 +15,7 @@ var roomLogic = {
         for(var name in Game.spawns){
             var spawn = Game.spawns[name];
             var roomInfo = roomLogic.getRoomInfo(spawn.room);
-            var youngCreepsInRole = _.filter(Game.creeps, (creep) => (!populationPerRoom || creep.room.name === spawn.room.name) && creep.memory.role === roleName && creep.ticksToLive > 150);
+            var youngCreepsInRole = _.filter(Game.creeps, (creep) => (creep.memory.role === roleName && creep.ticksToLive > 150));
             //console.log(spawn.room.name, ":", roleName, ":", youngCreepsInRole);
             
             if(youngCreepsInRole.length < optimalPopulation[roomInfo.roomLevel] || (enableAdaptivePopulation && roomInfo.containerAvailable >= 3500)) {

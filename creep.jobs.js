@@ -81,7 +81,6 @@ var jobLogic = {
         var source = locatorLogic.findPristineSource(creep);
         if(source) {
             creepTasks.moveHarvest(creep, source);
-            creep.memory.optimalSourceId = source.id;
             creep.say('👇');
             return true;
         }
@@ -158,16 +157,21 @@ var jobLogic = {
 
     upgrade: function(creep)
     {
-        creep.say('🚀');
-        if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ff00ff'}});
-        }
-        //every once in a while bump a little closer to allow more creeps to fit in the vicinity
-        if(Game.time % 10 === 0){
-            creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ff00ff'}});
-        }
+        if(creep.store.getUsedCapacity(RESOURCE_ENERGY) > 0){
+            creep.say('🚀');
+            if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ff00ff'}});
+            }
+            //every once in a while bump a little closer to allow more creeps to fit in the vicinity
+            if(Game.time % 10 === 0){
+                creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ff00ff'}});
+            }
 
-        return true;
+            return true;
+        }
+        else {
+            return false;
+        }
     },
 
     repair: function(creep){
@@ -182,7 +186,7 @@ var jobLogic = {
             } 
         })[0];
 
-        if (structureToRepair){
+        if (structureToRepair && creep.store.getUsedCapacity(RESOURCE_ENERGY) > 0){
             if(creep.repair(structureToRepair) == ERR_NOT_IN_RANGE){
                 creep.moveTo(structureToRepair, {visualizePathStyle: {stroke: '#00ffff'}});
             };
@@ -194,6 +198,7 @@ var jobLogic = {
     },
     noop: function(creep){
         creep.say('⏳');
+        creep.moveTo(room.controller);
         return true;
     }
 };

@@ -3,7 +3,7 @@ var roomLogic = require('room.logic');
 var roleDrone = require('role.drone');
 
 const roleName = "scavenger";
-const optimalPopulation = {1:12, 2:12, 3:6, 4:6, 5:6, 6:6, 7:6, 8:6};
+const optimalPopulation = {1:0, 2:0, 3:0, 4:0, 5:6, 6:6, 7:6, 8:6};
 const creepBuilds = {
     300: [WORK,CARRY,MOVE,MOVE],
     350: [WORK,CARRY,MOVE,MOVE],
@@ -20,7 +20,7 @@ const creepBuilds = {
 
 var roleScavenger = {
     populate: function(){
-        roomLogic.spawnCreeps(roleName, optimalPopulation, creepBuilds, true, false);
+        roomLogic.spawnCreeps(roleName, optimalPopulation, creepBuilds, false, false);
     },
     activate: function(creep) {
         const exit = creep.pos.findClosestByRange(FIND_EXIT_RIGHT);
